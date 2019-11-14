@@ -1,0 +1,45 @@
+#include<stdio.h>
+void minmax(int a[],int l,int h,int *max,int *min){
+	int mid=(l+h)/2;
+	int max1=0,min1=0;
+	if(l==h){
+		*max=a[l];
+		*min=a[l];
+	}
+	else if(l+1==h){
+		if(a[l]>a[h]){
+			*max=a[l];
+			*min=a[h];	
+		}
+		else{
+			*max=a[h];
+			*min=a[l];	
+		}
+	}
+	else{
+	minmax(a,l,mid,max,min);
+	minmax(a,mid+1,h,&max1,&min1);
+	if(max1>*max){
+		*max=max1;
+	}
+	if(min1<*min){
+		*min=min1;
+	}
+	}
+}
+int main(){
+	int a[100],min=0,max=0,l,h,i,n;
+	printf("enter no.of elements in array:");
+	scanf("%d",&n);
+	printf("enter array");
+	for(i=0;i<n;i++){
+		scanf("%d",&a[i]);
+	}
+	l=0;
+	h=n-1;
+	minmax(a,l,h,&max,&min);
+	printf("max=%d",max);
+	printf("min=%d",min);
+	return 0;
+	
+}
