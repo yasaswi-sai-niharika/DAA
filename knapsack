@@ -1,0 +1,70 @@
+#include<stdio.h>
+struct node{
+	int profit;
+	int weight;
+	float p;
+};
+int main(){
+	struct node ob[100];
+	int n,cap,p,i,j,t,c,y,l[100];
+	float x[100],totalp=0.0;
+	printf("enter no.of elements in the knapsack");
+	scanf("%d",&n);
+	printf("enter capacity of the bag");
+	scanf("%d",&cap);
+	for(i=1;i<=n;i++){
+		printf("enter weights:");
+		scanf("%d",&ob[i].weight);
+		printf("enter profit:");
+		scanf("%d",&ob[i].profit);
+		ob[i].p=0;
+	}
+	for(i=1;i<=n;i++){
+		c=ob[i].profit;
+		y=ob[i].weight;
+		x[i]=(float)c/y;
+		l[i]=i;
+	}
+	for(i=1;i<=n;i++){
+		for(j=i+1;j<=n;j++){
+			if(x[i]<x[j]){
+				t=l[i];
+				l[i]=l[j];
+				l[j]=t;
+				t=x[i];
+				x[i]=x[j];
+				x[j]=t;
+			}
+		}
+	}
+	for(i=1;i<=n;i++){
+		if(ob[l[i]].weight<=cap){
+			ob[l[i]].p=1;
+			cap-=ob[l[i]].weight;
+		}
+		else
+		break;
+	}
+	ob[l[i]].p=(float)cap/ob[l[i]].weight;
+	
+	for(i=1;i<=n;i++){
+		printf("profits:%d\t",ob[i].profit);
+	
+	}
+		printf("\n");
+	for(i=1;i<=n;i++){
+		printf("weights:%d\t",ob[i].weight);	
+	
+	}
+		printf("\n");
+	for(i=1;i<=n;i++){
+		printf("solution:%f\t",ob[i].p);
+		
+	}
+	printf("\n");
+	for(i=1;i<=n;i++){
+		totalp+=ob[l[i]].p*ob[l[i]].profit;
+	}
+	printf("%f",totalp);
+	return 0;
+}
